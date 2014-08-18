@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:infinispan="http://www.infinispan.org/schemas/spring" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.infinispan.org/schemas/spring http://www.infinispan.org/schemas/infinispan-spring.xsd">
+
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.jboss.datagrid, egovframework.let.cop.bbs.service" />
+
+
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+
+	<!-- Infinispan cache manager class="org.infinispan.spring.provider.SpringEmbeddedCacheManagerFactoryBean"
+	          -->
+	<bean id="cacheManager"
+          class="org.infinispan.spring.provider.SpringRemoteCacheManagerFactoryBean">
+        <property name="configurationProperties">
+                <props>
+<!--                         <prop key="infinispan.client.hotrod.server_list">192.168.119.135:11222</prop> -->
+                        <prop key="infinispan.client.hotrod.server_list">1.234.79.59:11222</prop>
+                        <prop key="infinispan.client.hotrod.socket_timeout">60000</prop>
+                        <prop key="infinispan.client.hotrod.connect_timeout">10000</prop>
+                </props>
+        </property>
+    </bean>
+
+	<!-- ############################################### CHACHE 설정 ############################################### 
+		<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
+		scope="singleton"> <property name="shared" value="true"/> <property name="configLocation" 
+		value="${cache.configLocation}" /> </bean> -->
+
+</beans>
+  
